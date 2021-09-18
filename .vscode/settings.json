@@ -1,0 +1,5 @@
+{
+  "debug.javascript.breakOnConditionalError": true,
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.showBreakpointsInOverviewRuler": true
+}
