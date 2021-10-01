@@ -12,9 +12,7 @@ class CreateCategoryUseCase {
   constructor(
     @inject('CategoriesRepository')
     private categoriesRepository: ICategoriesRepository
-  ) {
-    this.categoriesRepository = categoriesRepository;
-  }
+  ) {}
 
   async execute({ name, description }: IRequest): Promise<void> {
     const categoryAlreadyExists = await this.categoriesRepository.findByName(
