@@ -1,6 +1,6 @@
+import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
+import { deleteFile } from '@utils/file';
 import { inject, injectable } from 'tsyringe';
-import { deleteFile } from '../../../../utils/file';
-import { IUsersRepository } from '../../repositories/IUsersRepository';
 
 interface IRequest {
   userId: string;
@@ -17,7 +17,7 @@ class UpdateUserAvatarUseCase {
     if (user.avatar) {
       await deleteFile(`./tmp/avatar/${user.avatar}`);
     }
-    
+
     user.avatar = avatarFile;
 
     await this.usersRepository.create(user)
