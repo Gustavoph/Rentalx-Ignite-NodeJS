@@ -6,8 +6,8 @@ let carsRepositoryInMemory: CarsRepositoryInMemory;
 
 describe('Create Car', () => {
   beforeEach(() => {
-    carsRepositoryInMemory: new CarsRepositoryInMemory();
-    createCarUseCase: new CreateCarUseCase(carsRepositoryInMemory);
+    carsRepositoryInMemory = new CarsRepositoryInMemory();
+    createCarUseCase = new CreateCarUseCase(carsRepositoryInMemory);
   })
 
   it('Should be able to create a new car', async () => {
