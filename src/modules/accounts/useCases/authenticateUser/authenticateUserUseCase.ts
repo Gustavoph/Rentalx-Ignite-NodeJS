@@ -1,9 +1,12 @@
 import { compare } from 'bcrypt';
-import { inject, injectable } from 'tsyringe';
 import { sign } from 'jsonwebtoken'
+import { inject, injectable } from 'tsyringe';
 
+import auth from '@config/auth';
 import { AppError } from '@shared/errors/AppError';
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
+import { IUsersTokenRepository } from '@modules/accounts/repositories/IUsersTokenRepository';
+import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider';
 
 interface IRequest {
   email: string;
@@ -16,11 +19,16 @@ interface IResponse {
     email: string
   },
   token: string;
+  refresh_token: string;
 }
 
 @injectable()
 class AuthenticateUserUseCase {
-  constructor(@inject('UsersRepository') private usersRepository: IUsersRepository){}
+  constructor(
+    @inject('UsersRepository') private usersRepository: IUsersRepository,
+    @inject('DayjsDateProvider') private dayjsDateProvider: IDateProvider,
+    @inject('UsersTokenRepository') private usersTokenRepository: IUsersTokenRepository,
+  ){}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
@@ -31,9 +39,22 @@ class AuthenticateUserUseCase {
 
     if (!passwordMath) throw new AppError("Email or password incorrect");
 
-    const token = sign({}, "cc3a0280e4fc1415930899896574e118", {
+    const token = sign({}, auth.secret_token, {
       subject: user.id,
-      expiresIn: '1d'
+      expiresIn: auth.expires_in_token
+    })
+
+    const refresh_token = sign({ email }, auth.secret_refresh_token, {
+      subject: user.id,
+      expiresIn: auth.expires_in_refresh_token
+    })
+
+    const refresh_token_expires_date = this.dayjsDateProvider.addDays(30)
+
+    await this.usersTokenRepository.create({
+      user_id: user.id,
+      refresh_token,
+      expires_date: refresh_token_expires_date
     })
 
     const tokenReturn: IResponse  = {
@@ -41,7 +62,8 @@ class AuthenticateUserUseCase {
         name: user.name,
         email: user.email
       },
-      token
+      token,
+      refresh_token
     }
 
     return tokenReturn
