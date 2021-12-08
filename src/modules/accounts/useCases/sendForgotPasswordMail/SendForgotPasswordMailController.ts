@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 
 import { SendForgotPasswordMailUseCase } from './SendForgotPasswordMailUseCase';
 
-class sendForgotPasswordMailController {
+class SendForgotPasswordMailController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const email = request.body;
+    const { email } = request.body;
 
     const sendForgotPasswordMailUseCase = container.resolve(
       SendForgotPasswordMailUseCase
@@ -17,4 +17,4 @@ class sendForgotPasswordMailController {
   }
 }
 
-export { sendForgotPasswordMailController }
+export { SendForgotPasswordMailController }
