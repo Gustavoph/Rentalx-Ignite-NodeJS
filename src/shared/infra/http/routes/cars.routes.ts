@@ -10,7 +10,7 @@ import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
 import multer from 'multer';
 
 const carsRoutes = Router();
-const uploadAvatar = multer(uploadConfig.upload('./tmp/cars'))
+const uploadAvatar = multer(uploadConfig)
 
 let createCarController =  new CreateCarController()
 let uploadCarImagesController = new UploadCarImagesController();
