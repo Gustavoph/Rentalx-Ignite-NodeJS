@@ -11,7 +11,7 @@ interface IRequest {
 class UpdateUserAvatarUseCase {
   constructor(
     @inject('UsersRepository') private usersRepository: IUsersRepository,
-    @inject('LocalStorageProvider') private storageProvider: IStorageProvider,
+    @inject('StorageProvider') private storageProvider: IStorageProvider,
   ) {}
 
   async execute ({ userId, avatarFile }: IRequest): Promise<void> {
