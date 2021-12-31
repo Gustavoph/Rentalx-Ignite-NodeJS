@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import 'dotenv/config'
+
 import express, { NextFunction, Request, Response } from 'express';
 import "express-async-errors"
 import swaggerUi from 'swagger-ui-express';
@@ -12,7 +14,6 @@ import '@shared/container';
 import { AppError } from '@shared/errors/AppError';
 
 createConnection();
-
 const app = express();
 
 app.use(express.json());
