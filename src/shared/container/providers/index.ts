@@ -23,7 +23,7 @@ container.registerSingleton<IDateProvider>(
 
 const diskStorage = {
   local: LocalStorageProvider,
-  S3: S3StorageProvider
+  s3: S3StorageProvider
 }
 
 container.registerSingleton<IStorageProvider>(
