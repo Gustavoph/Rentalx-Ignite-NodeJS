@@ -11,6 +11,7 @@
       "@errors/*": ["errors/*"],
       "@utils/*": ["utils/*"]
     },
+    "outDir": "./dist",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
