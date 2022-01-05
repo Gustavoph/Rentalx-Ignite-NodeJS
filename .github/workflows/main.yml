@@ -16,7 +16,7 @@ jobs:
       - name: Setup Nodejs
         uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
           
       - name: Install Dependencies
         run: yarn
@@ -31,4 +31,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: "., !node_modules"
-          target: "test"
+          target: "~/app/Rentalx-Ignite-NodeJS"
